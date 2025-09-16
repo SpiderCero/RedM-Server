@@ -12,15 +12,18 @@ tasks:
     src: https://github.com/AustinBMX/DRB-Studios-Project-Server
     ref: main
     dest: ./tmp/DRBServer
+
   - action: move_path
     src: ./tmp/DRBServer/server.cfg
     dest: ./server.cfg
+
   - action: move_path
     src: ./tmp/DRBServer/SQL
     dest: ./SQL
 
   # 2. Preparar base de datos
   - action: connect_database
+
   - action: query_database
     file: ./SQL/rsgcore.sql
 
@@ -34,6 +37,7 @@ tasks:
   - action: download_file
     path: ./tmp/files/oxmysql.zip
     url: https://github.com/CommunityOx/oxmysql/releases/latest/download/oxmysql.zip
+
   - action: unzip
     dest: ./resources/[standalone]
     src: ./tmp/files/oxmysql.zip
@@ -63,7 +67,7 @@ tasks:
     ref: main
     src: https://github.com/Rexshack-RedM/menuv
 
-  # 5. Framework RSGCore (todo en español)
+  # 5. Framework RSGCore
   - action: download_github
     src: https://github.com/Rexshack-RedM/rsg-core
     ref: main
@@ -123,5 +127,7 @@ tasks:
   # 7. Limpieza de archivos innecesarios
   - action: remove_path
     path: ./resources/[cfx-default]/[gameplay]/chat
+
   - action: remove_path
     path: ./tmp
+
