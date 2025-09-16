@@ -1,0 +1,127 @@
+$engine: 3
+$onesync: on
+
+name: Servidor RedM RP Completo
+version: 1.0.0
+author: DRB + Rexshack Gaming
+description: Build completo de RedM con RSGCore en español
+
+tasks:
+  # 1. Descargar archivos base del servidor
+  - action: download_github
+    src: https://github.com/AustinBMX/DRB-Studios-Project-Server
+    ref: main
+    dest: ./tmp/DRBServer
+  - action: move_path
+    src: ./tmp/DRBServer/server.cfg
+    dest: ./server.cfg
+  - action: move_path
+    src: ./tmp/DRBServer/SQL
+    dest: ./SQL
+
+  # 2. Preparar base de datos
+  - action: connect_database
+  - action: query_database
+    file: ./SQL/rsgcore.sql
+
+  # 3. Recursos base de CFX
+  - action: download_github
+    src: https://github.com/citizenfx/cfx-server-data
+    subpath: resources
+    dest: ./resources/[cfx-default]
+
+  # 4. Recursos standalone necesarios
+  - action: download_file
+    path: ./tmp/files/oxmysql.zip
+    url: https://github.com/CommunityOx/oxmysql/releases/latest/download/oxmysql.zip
+  - action: unzip
+    dest: ./resources/[standalone]
+    src: ./tmp/files/oxmysql.zip
+
+  - action: download_github
+    dest: ./resources/[standalone]/ox_lib
+    ref: main
+    src: https://github.com/Rexshack-RedM/ox_lib
+
+  - action: download_github
+    dest: ./resources/[standalone]/progressbar
+    ref: main
+    src: https://github.com/Rexshack-RedM/progressbar
+
+  - action: download_github
+    dest: ./resources/[standalone]/pnotify
+    ref: main
+    src: https://github.com/Rexshack-RedM/pnotify
+
+  - action: download_github
+    dest: ./resources/[standalone]/menu_default
+    ref: main
+    src: https://github.com/Rexshack-RedM/menu_default
+
+  - action: download_github
+    dest: ./resources/[standalone]/menuv
+    ref: main
+    src: https://github.com/Rexshack-RedM/menuv
+
+  # 5. Framework RSGCore (todo en español)
+  - action: download_github
+    src: https://github.com/Rexshack-RedM/rsg-core
+    ref: main
+    dest: ./resources/[framework]/rsg-core
+
+  - action: download_github
+    src: https://github.com/Rexshack-RedM/rsg-multicharacter
+    ref: main
+    dest: ./resources/[framework]/rsg-multicharacter
+
+  - action: download_github
+    src: https://github.com/Rexshack-RedM/rsg-inventory
+    ref: main
+    dest: ./resources/[framework]/rsg-inventory
+
+  - action: download_github
+    src: https://github.com/Rexshack-RedM/rsg-appearance
+    ref: main
+    dest: ./resources/[framework]/rsg-appearance
+
+  - action: download_github
+    src: https://github.com/Rexshack-RedM/rsg-lawman
+    ref: main
+    dest: ./resources/[framework]/rsg-lawman
+
+  - action: download_github
+    src: https://github.com/Rexshack-RedM/rsg-medic
+    ref: main
+    dest: ./resources/[framework]/rsg-medic
+
+  - action: download_github
+    src: https://github.com/Rexshack-RedM/rsg-weapons
+    ref: main
+    dest: ./resources/[framework]/rsg-weapons
+
+  - action: download_github
+    src: https://github.com/Rexshack-RedM/rsg-jobs
+    ref: main
+    dest: ./resources/[framework]/rsg-jobs
+
+  - action: download_github
+    src: https://github.com/Rexshack-RedM/rsg-banking
+    ref: main
+    dest: ./resources/[framework]/rsg-banking
+
+  # 6. Map Mods
+  - action: download_github
+    src: https://github.com/Rexshack-RedM/redm-ipls
+    ref: main
+    dest: ./resources/[mapmods]/redm-ipls
+
+  - action: download_github
+    src: https://github.com/Rexshack-RedM/redm-ymaps
+    ref: main
+    dest: ./resources/[mapmods]/redm-ymaps
+
+  # 7. Limpieza de archivos innecesarios
+  - action: remove_path
+    path: ./resources/[cfx-default]/[gameplay]/chat
+  - action: remove_path
+    path: ./tmp
